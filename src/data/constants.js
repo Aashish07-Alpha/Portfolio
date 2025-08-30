@@ -353,11 +353,58 @@ export const projects = [
     github: "https://github.com/Aashish07-Alpha/finadvice",
     webapp: "https://finadvisorapp.vercel.app/",
   },
+  {
+    id: 4,
+    title: "Portfolio Website",
+    date: "Dec 2024 - Present",
+    description:
+      "A modern, responsive portfolio website showcasing my skills, projects, and professional journey. Built with React.js and styled-components, featuring smooth animations, dark/light theme toggle, and a clean, professional design. Includes sections for projects, skills, experience, education, and contact information with a fully responsive layout.",
+    image: require("../images/Portfolio.png"),
+    tags: [
+      "React",
+      "JavaScript",
+      "CSS",
+      "Styled Components",
+      "Responsive Design",
+      "GitHub Pages"
+    ],
+    category: "web app",
+    github: "https://github.com/Aashish07-Alpha/portfolio",
+    webapp: "https://aashish07-alpha.github.io/portfolio/",
+  },
+  {
+    id: 5,
+    title: "Jarvis AI Assistant",
+    date: "Nov 2024 - Dec 2024",
+    description:
+      "Developed a comprehensive virtual assistant using Python, incorporating over 20 distinct functionalities such as opening applications, managing social media, and checking system conditions. Achieved 90% command recognition accuracy using TensorFlow and key Python libraries. Enhanced efficiency by automating daily schedules and tasks, Integrated speech-to-text and text-to-speech capabilities.",
+    image: require("../images/Jarvis.jpg"),
+    tags: [
+      "Python",
+      "TensorFlow",
+      "Pyttsx3",
+      "Numpy",
+      "Speech Recognition",
+      "Text-to-Speech",
+      "AI/ML"
+    ],
+    category: "AI/ML",
+    github: "https://github.com/Aashish07-Alpha/jarvis-ai-assistant",
+    webapp: "",
+  },
 ];
 
 export const achievements = [
   {
     id: 1,
+    title: "Winner – Kurukshetra Hackathon 2025 (National Level)",
+    date: "Aug 2025",
+    description: "Won a 24-hour national-level hackathon at MIT ACSC, Alandi; received trophies, certificates, goodies, and internship offers.",
+    category: "Hackathon",
+    image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+  },
+  {
+    id: 2,
     title: "Top 5 Finalist – InnoVetch Hackathon 2.0 (VIT Pune)",
     date: "July 2025",
     description: "Secured internship opportunity at Nextch; ranked top 5 among 250+ teams for innovative AI-based solution.",
@@ -365,7 +412,7 @@ export const achievements = [
     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
   },
   {
-    id: 2,
+    id: 3,
     title: "3rd Place – Web Coding Challenge (College Fest)",
     date: "March 2024",
     description: "Developed a scalable web solution under timed constraints, optimizing load time by 25%.",
@@ -373,6 +420,7 @@ export const achievements = [
     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
   },
 ];
+
 
 export const TimeLineData = [
   { year: 2017, text: "Started my journey" },

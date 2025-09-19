@@ -1,238 +1,239 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaGithub, FaLinkedin, FaExternalLinkAlt } from 'react-icons/fa';
+import { CloseRounded, GitHub, LinkedIn } from '@mui/icons-material';
+import { Modal } from '@mui/material';
+import React from 'react'
+import styled from 'styled-components'
 
-const ProjectDetails = ({ openModal, setOpenModal }) => {
-  const project = openModal?.project;
+const Container = styled.div`
+width: 100%;
+height: 100%;
+position: absolute;
+top: 0;
+left: 0;
+background-color: #000000a7;
+display: flex;
+align-items: top;
+justify-content: center;
+overflow-y: scroll;
+transition: all 0.5s ease;
+`;
 
-  const backdropVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-    exit: { opacity: 0 }
-  };
+const Wrapper = styled.div`
+max-width: 800px;
+width: 100%;
+border-radius: 16px;
+margin: 50px 12px;
+height: min-content;
+background-color: ${({ theme }) => theme.card};
+color: ${({ theme }) => theme.text_primary};
+padding: 20px;
+display: flex;
+flex-direction: column;
+position: relative;
+`;
 
-  const modalVariants = {
-    hidden: { 
-      opacity: 0, 
-      scale: 0.8,
-      y: 50
-    },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30
-      }
-    },
-    exit: { 
-      opacity: 0, 
-      scale: 0.8,
-      y: 50,
-      transition: {
-        duration: 0.2
-      }
+const Title = styled.div`
+  font-size: 28px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary};
+  margin: 8px 6px 0px 6px;
+  @media only screen and (max-width: 600px) {
+      font-size: 24px;
+      margin: 6px 6px 0px 6px;
+  }
+`;
+
+const Date = styled.div`
+    font-size: 16px;
+    margin: 2px 6px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.text_secondary};
+    @media only screen and (max-width: 768px){
+        font-size: 12px;
     }
-  };
+`
 
-  const handleClose = () => {
-    setOpenModal({ state: false, project: null });
-  };
 
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      handleClose();
+
+const Desc = styled.div`
+    font-size: 16px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.text_primary};
+    margin: 8px 6px;
+    @media only screen and (max-width: 600px) {
+        font-size: 14px;
+        margin: 6px 6px;
     }
-  };
+`;
 
-  return (
-    <AnimatePresence>
-      {openModal?.state && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 backdrop-blur-sm"
-          variants={backdropVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          onClick={handleBackdropClick}
-        >
-          <motion.div
-            className="relative w-full max-w-4xl mx-4 my-8 sm:my-12 lg:my-16"
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            {/* Modal Content */}
-            <div className="card p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto">
-              {/* Close Button */}
-              <motion.button
-                className="absolute top-4 right-4 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-dark-700 hover:bg-dark-600 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300"
-                onClick={handleClose}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <FaTimes className="w-4 h-4 sm:w-5 sm:h-5" />
-              </motion.button>
+const Image = styled.img`
+    width: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 30px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+`;
 
-              {/* Project Image */}
-              <motion.img
-                src={project?.image}
-                alt={project?.title}
-                className="w-full h-48 sm:h-64 lg:h-80 object-cover rounded-xl shadow-2xl mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              />
+const Label = styled.div`
+    font-size: 20px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.text_primary};
+    margin: 8px 6px;
+    @media only screen and (max-width: 600px) {
+        font-size: 16px;
+        margin: 8px 6px;
+    }
+`;
 
-              {/* Project Title */}
-              <motion.h2
-                className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2"
-                style={{ fontSize: 'clamp(1.5rem, 3vw + 0.5rem, 2.5rem)' }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                {project?.title}
-              </motion.h2>
+const Tags = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin: 8px 0px;
+    @media only screen and (max-width: 600px) {
+        margin: 4px 0px;
+    }
+`;
 
-              {/* Project Date */}
-              <motion.div
-                className="text-sm sm:text-base text-primary-400 font-medium mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                {project?.date}
-              </motion.div>
+const Tag = styled.div`
+    font-size: 14px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.primary};
+    margin: 4px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.primary + 20};
+    @media only screen and (max-width: 600px) {
+        font-size: 12px;
+    }
+`;
 
-              {/* Project Tags */}
-              <motion.div
-                className="flex flex-wrap gap-2 mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                {project?.tags?.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-xs sm:text-sm font-medium border border-primary-500/30"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </motion.div>
+const Members = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 12px 6px;
+    @media only screen and (max-width: 600px) {
+        margin: 4px 6px;
+    }
+`;
 
-              {/* Project Description */}
-              <motion.div
-                className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                {project?.description}
-              </motion.div>
+const Member = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
+`;
 
-              {/* Team Members */}
-              {project?.member && (
-                <motion.div
-                  className="mb-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Team Members</h3>
-                  <div className="space-y-3">
-                    {project?.member?.map((member, index) => (
-                      <motion.div
-                        key={index}
-                        className="flex items-center gap-3 sm:gap-4 p-3 bg-dark-700/50 rounded-lg"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.7 + index * 0.1 }}
-                      >
-                        <img
-                          src={member.img}
-                          alt={member.name}
-                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-primary-500/30"
-                        />
-                        <div className="flex-1">
-                          <div className="text-white font-medium text-sm sm:text-base">{member.name}</div>
-                        </div>
-                        <div className="flex gap-2">
-                          {member.github && (
-                            <motion.a
-                              href={member.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-8 h-8 sm:w-10 sm:h-10 bg-dark-600 hover:bg-primary-500/20 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 transition-all duration-300"
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <FaGithub className="w-4 h-4 sm:w-5 sm:h-5" />
-                            </motion.a>
-                          )}
-                          {member.linkedin && (
-                            <motion.a
-                              href={member.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-8 h-8 sm:w-10 sm:h-10 bg-dark-600 hover:bg-primary-500/20 rounded-lg flex items-center justify-center text-gray-400 hover:text-primary-400 transition-all duration-300"
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                            >
-                              <FaLinkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-                            </motion.a>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+const MemberImage = styled.img`
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 4px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    @media only screen and (max-width: 600px) {
+        width: 32px;
+        height: 32px;
+    }
+`;
 
-              {/* Action Buttons */}
-              <motion.div
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                {project?.github && (
-                  <motion.a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <FaGithub className="w-4 h-4" />
-                    View Code
-                  </motion.a>
-                )}
-                {project?.webapp && (
-                  <motion.a
-                    href={project.webapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary flex items-center justify-center gap-2 w-full sm:w-auto"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <FaExternalLinkAlt className="w-4 h-4" />
-                    View Live App
-                  </motion.a>
-                )}
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+const MemberName = styled.div`
+    font-size: 16px;
+    font-weight: 500;
+    width: 200px;
+    color: ${({ theme }) => theme.text_primary};
+    @media only screen and (max-width: 600px) {
+        font-size: 14px;
+    }
+`;
 
-export default ProjectDetails;
+
+const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin: 12px 0px;
+    gap: 12px;
+`;
+
+const Button = styled.a`
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.text_primary};
+    padding: 12px 16px;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.primary};
+    ${({ dull, theme }) => dull && `
+        background-color: ${theme.bgLight};
+        color: ${theme.text_secondary};
+        &:hover {
+            background-color: ${({ theme }) => theme.bg + 99};
+        }
+    `}
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    &:hover {
+        background-color: ${({ theme }) => theme.primary + 99};
+    }
+    @media only screen and (max-width: 600px) {
+        font-size: 12px;
+    }
+`;
+
+
+const index = ({ openModal, setOpenModal }) => {
+    const project = openModal?.project;
+    return (
+        <Modal open={true} onClose={() => setOpenModal({ state: false, project: null })}>
+            <Container>
+                <Wrapper>
+                    <CloseRounded
+                        style={{
+                            position: "absolute",
+                            top: "10px",
+                            right: "20px",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => setOpenModal({ state: false, project: null })}
+                    />
+                    <Image src={project?.image} />
+                    <Title>{project?.title}</Title>
+                    <Date>{project.date}</Date>
+                    <Tags>
+                        {project?.tags.map((tag) => (
+                            <Tag>{tag}</Tag>
+                        ))}
+                    </Tags>
+                    <Desc>{project?.description}</Desc>
+                    {project.member && (
+                        <>
+                            <Label>Members</Label>
+                            <Members>
+                                {project?.member.map((member) => (
+                                    <Member>
+                                        <MemberImage src={member.img} />
+                                        <MemberName>{member.name}</MemberName>
+                                        <a href={member.github} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
+                                            <GitHub />
+                                        </a>
+                                        <a href={member.linkedin} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
+                                            <LinkedIn />
+                                        </a>
+                                    </Member>
+                                ))}
+                            </Members>
+                        </>
+                    )}
+                    <ButtonGroup>
+                        <Button dull href={project?.github} target='new'>View Code</Button>
+                        <Button href={project?.webapp} target='new'>View Live App</Button>
+                    </ButtonGroup>
+                </Wrapper>
+            </Container>
+
+        </Modal>
+    )
+}
+
+export default index

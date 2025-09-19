@@ -402,6 +402,8 @@ export const achievements = [
     description: "Won a 24-hour national-level hackathon at MIT ACSC, Alandi; received trophies, certificates, goodies, and internship offers.",
     category: "Hackathon",
     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    impact: "National Recognition",
+    skills: ["React", "Node.js", "AI/ML", "Team Leadership"]
   },
   {
     id: 2,
@@ -410,6 +412,8 @@ export const achievements = [
     description: "Secured internship opportunity at Nextch; ranked top 5 among 250+ teams for innovative AI-based solution.",
     category: "Hackathon",
     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    impact: "Internship Offer",
+    skills: ["AI/ML", "Python", "Data Science", "Innovation"]
   },
   {
     id: 3,
@@ -418,7 +422,10 @@ export const achievements = [
     description: "Developed a scalable web solution under timed constraints, optimizing load time by 25%.",
     category: "Competition",
     image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    impact: "Performance Optimization",
+    skills: ["Web Development", "Performance", "Problem Solving"]
   },
+  
 ];
 
 

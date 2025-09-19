@@ -1,239 +1,230 @@
-import { CloseRounded, GitHub, LinkedIn } from '@mui/icons-material';
-import { Modal } from '@mui/material';
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaTimes, FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaCode, FaRocket, FaUsers, FaStar } from 'react-icons/fa';
 
-const Container = styled.div`
-width: 100%;
-height: 100%;
-position: absolute;
-top: 0;
-left: 0;
-background-color: #000000a7;
-display: flex;
-align-items: top;
-justify-content: center;
-overflow-y: scroll;
-transition: all 0.5s ease;
-`;
+const ProjectDetails = ({ openModal, setOpenModal }) => {
+  const project = openModal?.project;
 
-const Wrapper = styled.div`
-max-width: 800px;
-width: 100%;
-border-radius: 16px;
-margin: 50px 12px;
-height: min-content;
-background-color: ${({ theme }) => theme.card};
-color: ${({ theme }) => theme.text_primary};
-padding: 20px;
-display: flex;
-flex-direction: column;
-position: relative;
-`;
-
-const Title = styled.div`
-  font-size: 28px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_primary};
-  margin: 8px 6px 0px 6px;
-  @media only screen and (max-width: 600px) {
-      font-size: 24px;
-      margin: 6px 6px 0px 6px;
-  }
-`;
-
-const Date = styled.div`
-    font-size: 16px;
-    margin: 2px 6px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    @media only screen and (max-width: 768px){
-        font-size: 12px;
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 50 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.8,
+      y: 50,
+      transition: {
+        duration: 0.3,
+        ease: "easeIn"
+      }
     }
-`
+  };
 
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
 
+  if (!openModal.state || !project) return null;
 
-const Desc = styled.div`
-    font-size: 16px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_primary};
-    margin: 8px 6px;
-    @media only screen and (max-width: 600px) {
-        font-size: 14px;
-        margin: 6px 6px;
-    }
-`;
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        variants={overlayVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        onClick={() => setOpenModal({ state: false, project: null })}
+      >
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+        
+        {/* Modal Content */}
+        <motion.div
+          className="relative bg-dark-800 rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-y-auto shadow-2xl border border-dark-700"
+          variants={modalVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close Button */}
+          <motion.button
+            className="absolute top-6 right-6 z-20 w-12 h-12 bg-dark-700/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-500/20 transition-all duration-300 border border-dark-600"
+            onClick={() => setOpenModal({ state: false, project: null })}
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <FaTimes className="w-6 h-6" />
+          </motion.button>
 
-const Image = styled.img`
-    width: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-top: 30px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
-`;
+          {/* Project Image with Enhanced Styling */}
+          <div className="relative overflow-hidden">
+            <motion.img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-72 md:h-96 object-cover"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            />
+            {/* Enhanced Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            
+            {/* Project Category Badge */}
+            <motion.div
+              className="absolute top-6 left-6 px-4 py-2 bg-primary-500/90 backdrop-blur-sm rounded-full text-white text-sm font-semibold flex items-center gap-2"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <FaRocket className="w-4 h-4" />
+              {project.category}
+            </motion.div>
 
-const Label = styled.div`
-    font-size: 20px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    margin: 8px 6px;
-    @media only screen and (max-width: 600px) {
-        font-size: 16px;
-        margin: 8px 6px;
-    }
-`;
+            {/* Project Title Overlay */}
+            <div className="absolute bottom-6 left-6 right-6">
+              <motion.h1
+                className="text-4xl md:text-5xl font-bold text-white mb-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                {project.title}
+              </motion.h1>
+              <motion.div
+                className="flex items-center gap-4 text-gray-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="flex items-center gap-2">
+                  <FaCalendarAlt className="w-4 h-4 text-primary-400" />
+                  <span className="text-sm font-medium">{project.date}</span>
+                </div>
+              </motion.div>
+            </div>
+          </div>
 
-const Tags = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    margin: 8px 0px;
-    @media only screen and (max-width: 600px) {
-        margin: 4px 0px;
-    }
-`;
+          {/* Enhanced Content */}
+          <div className="p-8 md:p-10">
+            {/* Project Stats */}
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <div className="bg-dark-700/50 rounded-xl p-6 text-center border border-dark-600">
+                <FaCode className="w-8 h-8 text-primary-400 mx-auto mb-3" />
+                <div className="text-2xl font-bold text-white mb-1">{project.tags.length}</div>
+                <div className="text-gray-400 text-sm">Technologies</div>
+              </div>
+              <div className="bg-dark-700/50 rounded-xl p-6 text-center border border-dark-600">
+                <FaRocket className="w-8 h-8 text-accent-400 mx-auto mb-3" />
+                <div className="text-2xl font-bold text-white mb-1">Live</div>
+                <div className="text-gray-400 text-sm">Deployment</div>
+              </div>
+              <div className="bg-dark-700/50 rounded-xl p-6 text-center border border-dark-600">
+                <FaStar className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
+                <div className="text-2xl font-bold text-white mb-1">Featured</div>
+                <div className="text-gray-400 text-sm">Project</div>
+              </div>
+            </motion.div>
 
-const Tag = styled.div`
-    font-size: 14px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.primary};
-    margin: 4px;
-    padding: 4px 8px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.primary + 20};
-    @media only screen and (max-width: 600px) {
-        font-size: 12px;
-    }
-`;
+            {/* Enhanced Description */}
+            <motion.div
+              className="mb-8"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <div className="w-1 h-8 bg-gradient-to-b from-primary-500 to-accent-500 rounded-full"></div>
+                Project Overview
+              </h3>
+              <div className="bg-dark-700/30 rounded-xl p-6 border border-dark-600">
+                <p className="text-gray-300 leading-relaxed text-lg">
+                  {project.description}
+                </p>
+              </div>
+            </motion.div>
 
-const Members = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin: 12px 6px;
-    @media only screen and (max-width: 600px) {
-        margin: 4px 6px;
-    }
-`;
+            {/* Enhanced Technologies */}
+            <motion.div
+              className="mb-8"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.9 }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <div className="w-1 h-8 bg-gradient-to-b from-primary-500 to-accent-500 rounded-full"></div>
+                Tech Stack
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                {project.tags.map((tag, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-gradient-to-r from-primary-500/10 to-accent-500/10 border border-primary-500/20 rounded-lg p-3 text-center hover:border-primary-500/40 transition-all duration-300"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 1.0 + index * 0.05 }}
+                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(14, 165, 233, 0.1)' }}
+                  >
+                    <span className="text-primary-400 font-medium text-sm">{tag}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-const Member = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 12px;
-`;
+            {/* Enhanced Action Buttons */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.1 }}
+            >
+              {project.github && (
+                <motion.a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 btn-secondary flex items-center justify-center gap-3 py-4 text-lg font-semibold rounded-xl"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <FaGithub className="w-6 h-6" />
+                  View Source Code
+                </motion.a>
+              )}
+              {project.webapp && (
+                <motion.a
+                  href={project.webapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 btn-primary flex items-center justify-center gap-3 py-4 text-lg font-semibold rounded-xl"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <FaExternalLinkAlt className="w-6 h-6" />
+                  Launch Live Demo
+                </motion.a>
+              )}
+            </motion.div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
-const MemberImage = styled.img`
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 4px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
-    @media only screen and (max-width: 600px) {
-        width: 32px;
-        height: 32px;
-    }
-`;
-
-const MemberName = styled.div`
-    font-size: 16px;
-    font-weight: 500;
-    width: 200px;
-    color: ${({ theme }) => theme.text_primary};
-    @media only screen and (max-width: 600px) {
-        font-size: 14px;
-    }
-`;
-
-
-const ButtonGroup = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin: 12px 0px;
-    gap: 12px;
-`;
-
-const Button = styled.a`
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    padding: 12px 16px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.primary};
-    ${({ dull, theme }) => dull && `
-        background-color: ${theme.bgLight};
-        color: ${theme.text_secondary};
-        &:hover {
-            background-color: ${({ theme }) => theme.bg + 99};
-        }
-    `}
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.5s ease;
-    &:hover {
-        background-color: ${({ theme }) => theme.primary + 99};
-    }
-    @media only screen and (max-width: 600px) {
-        font-size: 12px;
-    }
-`;
-
-
-const index = ({ openModal, setOpenModal }) => {
-    const project = openModal?.project;
-    return (
-        <Modal open={true} onClose={() => setOpenModal({ state: false, project: null })}>
-            <Container>
-                <Wrapper>
-                    <CloseRounded
-                        style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "20px",
-                            cursor: "pointer",
-                        }}
-                        onClick={() => setOpenModal({ state: false, project: null })}
-                    />
-                    <Image src={project?.image} />
-                    <Title>{project?.title}</Title>
-                    <Date>{project.date}</Date>
-                    <Tags>
-                        {project?.tags.map((tag) => (
-                            <Tag>{tag}</Tag>
-                        ))}
-                    </Tags>
-                    <Desc>{project?.description}</Desc>
-                    {project.member && (
-                        <>
-                            <Label>Members</Label>
-                            <Members>
-                                {project?.member.map((member) => (
-                                    <Member>
-                                        <MemberImage src={member.img} />
-                                        <MemberName>{member.name}</MemberName>
-                                        <a href={member.github} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
-                                            <GitHub />
-                                        </a>
-                                        <a href={member.linkedin} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
-                                            <LinkedIn />
-                                        </a>
-                                    </Member>
-                                ))}
-                            </Members>
-                        </>
-                    )}
-                    <ButtonGroup>
-                        <Button dull href={project?.github} target='new'>View Code</Button>
-                        <Button href={project?.webapp} target='new'>View Live App</Button>
-                    </ButtonGroup>
-                </Wrapper>
-            </Container>
-
-        </Modal>
-    )
-}
-
-export default index
+export default ProjectDetails;

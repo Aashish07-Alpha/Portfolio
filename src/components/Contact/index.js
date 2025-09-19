@@ -81,14 +81,14 @@ const Contact = () => {
     {
       icon: FaEnvelope,
       label: 'Email',
-      value: 'aashish.suryawanshi@example.com',
-      href: 'mailto:aashish.suryawanshi@example.com'
+      value: 'ashishsurya2005@gmail.com',
+      href: 'mailto:ashishsurya2005@gmail.com'
     },
     {
       icon: FaPhone,
       label: 'Phone',
-      value: '+91 9876543210',
-      href: 'tel:+919876543210'
+      value: '+91 9423696746',
+      href: 'tel:+919423696746'
     },
     {
       icon: FaMapMarkerAlt,

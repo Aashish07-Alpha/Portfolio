@@ -51,7 +51,7 @@ const About = () => {
     <section id="about" className="section-padding bg-dark-900">
       <motion.div
         ref={ref}
-        className="container-custom px-4 sm:px-6 lg:px-8"
+        className="container-custom"
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
@@ -63,6 +63,7 @@ const About = () => {
             <div className="space-y-4 text-center lg:text-left">
               <motion.h2
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white"
+                style={{ fontSize: 'clamp(2rem, 3vw + 1rem, 3.5rem)' }}
                 variants={itemVariants}
               >
                 About <span className="gradient-text">Me</span>
@@ -89,7 +90,7 @@ const About = () => {
                   href={Bio.resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary text-center text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
+                  className="btn-primary text-center w-full sm:w-auto"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -97,7 +98,7 @@ const About = () => {
                 </motion.a>
                 <motion.a
                   href="#contact"
-                  className="btn-secondary text-center text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
+                  className="btn-secondary text-center w-full sm:w-auto"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -108,36 +109,36 @@ const About = () => {
 
             {/* Stats Grid */}
             <motion.div
-              className="grid grid-cols-2 gap-3 sm:gap-4"
+              className="grid grid-cols-2 gap-4"
               variants={itemVariants}
             >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="card p-4 sm:p-6 text-center"
+                  className="card p-6 text-center"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05, rotate: 2 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary-400 mx-auto mb-2 sm:mb-3" />
-                  <div className="text-lg sm:text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                  <stat.icon className="w-8 h-8 text-primary-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-sm text-gray-400">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
 
           {/* Right Content - Skills */}
-          <motion.div className="space-y-6 lg:space-y-8" variants={itemVariants}>
+          <motion.div className="space-y-8" variants={itemVariants}>
             <motion.h3
-              className="text-2xl sm:text-3xl font-bold text-white text-center lg:text-left"
+              className="text-3xl font-bold text-white text-center lg:text-left"
               variants={itemVariants}
             >
               My <span className="gradient-text">Skills</span>
             </motion.h3>
 
             {/* Skill Bars */}
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-6">
               {skillBars.map((skill, index) => (
                 <motion.div
                   key={index}
@@ -145,10 +146,10 @@ const About = () => {
                   variants={itemVariants}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-white font-medium text-sm sm:text-base">{skill.name}</span>
-                    <span className="text-primary-400 font-semibold text-sm sm:text-base">{skill.percentage}%</span>
+                    <span className="text-white font-medium">{skill.name}</span>
+                    <span className="text-primary-400 font-semibold">{skill.percentage}%</span>
                   </div>
-                  <div className="w-full bg-dark-700 rounded-full h-2 sm:h-3 overflow-hidden">
+                  <div className="w-full bg-dark-700 rounded-full h-3 overflow-hidden">
                     <motion.div
                       className={`h-full bg-gradient-to-r ${skill.color} rounded-full`}
                       initial={{ width: 0 }}
@@ -162,17 +163,17 @@ const About = () => {
 
             {/* Tech Stack */}
             <motion.div
-              className="card p-4 sm:p-6"
+              className="card p-6"
               variants={itemVariants}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <h4 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Tech Stack</h4>
-              <div className="flex flex-wrap gap-2 sm:gap-3">
+              <h4 className="text-xl font-semibold text-white mb-4">Tech Stack</h4>
+              <div className="flex flex-wrap gap-3">
                 {['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'Python', 'MySQL', 'Git'].map((tech, index) => (
                   <motion.span
                     key={tech}
-                    className="px-2 sm:px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-xs sm:text-sm font-medium border border-primary-500/30"
+                    className="px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-sm font-medium border border-primary-500/30"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.3 }}

@@ -52,107 +52,101 @@ const Experience = () => {
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 to-accent-500"></div>
-
-          {/* Experience Items */}
-          <div className="space-y-12">
-            {experiences.map((experience, index) => (
+        {/* Experience Grid */}
+        <div className="responsive-grid-2">
+          {experiences.map((experience, index) => (
+            <motion.div
+              key={experience.id}
+              className="relative"
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Content Card */}
               <motion.div
-                key={experience.id}
-                className="relative flex items-start"
-                variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
+                className="card p-6 sm:p-8 h-full"
+                whileHover={{ 
+                  borderColor: 'rgba(14, 165, 233, 0.5)',
+                  boxShadow: '0 20px 40px rgba(14, 165, 233, 0.1)'
+                }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-6 w-4 h-4 bg-primary-500 rounded-full border-4 border-dark-800 z-10"></div>
-
-                {/* Content Card */}
-                <div className="ml-16 flex-1">
-                  <motion.div
-                    className="card p-8"
-                    whileHover={{ 
-                      borderColor: 'rgba(14, 165, 233, 0.5)',
-                      boxShadow: '0 20px 40px rgba(14, 165, 233, 0.1)'
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Header */}
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-white mb-2">
-                          {experience.role}
-                        </h3>
-                        <div className="flex items-center gap-2 text-primary-400 font-medium mb-2">
-                          <FaBriefcase className="w-4 h-4" />
-                          {experience.organization}
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <FaCalendarAlt className="w-4 h-4" />
-                          {experience.duration}
-                        </div>
-                      </div>
+                {/* Header */}
+                <div className="flex flex-col mb-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-primary-500/20 rounded-lg flex items-center justify-center">
+                      <FaBriefcase className="w-6 h-6 text-primary-400" />
                     </div>
-
-                    {/* Description */}
-                    <p className="text-gray-300 mb-6 leading-relaxed">
-                      {experience.description}
-                    </p>
-
-                    {/* Skills */}
                     <div>
-                      <h4 className="text-lg font-semibold text-white mb-3">Key Skills</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {experience.skills.map((skill, skillIndex) => (
-                          <motion.span
-                            key={skillIndex}
-                            className="px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-sm font-medium border border-primary-500/30"
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                            transition={{ 
-                              delay: (index * 0.2) + (skillIndex * 0.1),
-                              duration: 0.3 
-                            }}
-                            whileHover={{ 
-                              scale: 1.1, 
-                              backgroundColor: 'rgba(14, 165, 233, 0.3)',
-                              color: 'white'
-                            }}
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                        {experience.role}
+                      </h3>
+                      <div className="flex items-center gap-2 text-primary-400 font-medium text-sm sm:text-base">
+                        {experience.organization}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-gray-400 text-sm sm:text-base">
+                    <FaCalendarAlt className="w-4 h-4" />
+                    {experience.duration}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-300 mb-6 leading-relaxed text-sm sm:text-base">
+                  {experience.description}
+                </p>
+
+                {/* Skills */}
+                <div>
+                  <h4 className="text-base sm:text-lg font-semibold text-white mb-3">Key Skills</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {experience.skills.map((skill, skillIndex) => (
+                      <motion.span
+                        key={skillIndex}
+                        className="px-2 sm:px-3 py-1 bg-primary-500/20 text-primary-400 rounded-full text-xs sm:text-sm font-medium border border-primary-500/30"
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                        transition={{ 
+                          delay: (index * 0.2) + (skillIndex * 0.1),
+                          duration: 0.3 
+                        }}
+                        whileHover={{ 
+                          scale: 1.1, 
+                          backgroundColor: 'rgba(14, 165, 233, 0.3)',
+                          color: 'white'
+                        }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* Call to Action */}
         <motion.div
-          className="text-center mt-16"
+          className="text-center mt-12 sm:mt-16"
           variants={itemVariants}
         >
           <motion.div
-            className="card p-8 max-w-2xl mx-auto"
+            className="card p-6 sm:p-8 max-w-2xl mx-auto"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">
               Ready to Work Together?
             </h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6">
               I'm always looking for new opportunities to apply my skills and contribute to meaningful projects.
             </p>
             <motion.a
               href="#contact"
-              className="btn-primary inline-flex items-center gap-2"
+              className="btn-primary inline-flex items-center gap-2 w-full sm:w-auto justify-center"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

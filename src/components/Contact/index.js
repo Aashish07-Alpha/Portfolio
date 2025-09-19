@@ -3,13 +3,16 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
+
 import { Bio } from '../../data/constants';
 
 const Contact = () => {
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const form = useRef();
+
   
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -43,6 +46,7 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
     setSuccess(false);
     
     // Basic validation
@@ -66,29 +70,32 @@ const Contact = () => {
 
     emailjs.sendForm('service_tox7kqs', 'template_nv7k7mj', form.current, 'SybVGsYS52j2TfLbi')
       .then((result) => {
+
         setSuccess(true);
         form.current.reset();
         setLoading(false);
+
         setTimeout(() => setSuccess(false), 5000);
       }, (error) => {
         console.log(error.text);
         setError('Failed to send email. Please try again.');
         setLoading(false);
       });
+
   };
 
   const contactInfo = [
     {
       icon: FaEnvelope,
       label: 'Email',
-      value: 'ashishsurya2005@gmail.com',
-      href: 'mailto:ashishsurya2005@gmail.com'
+      value: 'aashish.suryawanshi@example.com',
+      href: 'mailto:aashish.suryawanshi@example.com'
     },
     {
       icon: FaPhone,
       label: 'Phone',
-      value: '+91 9423696746',
-      href: 'tel:+919423696746'
+      value: '+91 9876543210',
+      href: 'tel:+919876543210'
     },
     {
       icon: FaMapMarkerAlt,
@@ -99,17 +106,19 @@ const Contact = () => {
   ];
 
   return (
+
     <section id="contact" className="section-padding bg-dark-800">
       <motion.div
         ref={ref}
-        className="container-custom px-4 sm:px-6 lg:px-8"
+        className="container-custom"
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
       >
         {/* Section Header */}
         <motion.div className="text-center mb-12 sm:mb-16" variants={itemVariants}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4"
+              style={{ fontSize: 'clamp(2rem, 3vw + 1rem, 3.5rem)' }}>
             Get In <span className="gradient-text">Touch</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto px-4">
@@ -119,7 +128,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Contact Information */}
-          <motion.div className="space-y-6 lg:space-y-8" variants={itemVariants}>
+          <motion.div className="space-y-8" variants={itemVariants}>
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Let's Connect</h3>
               <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8">
@@ -152,28 +161,28 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <motion.div className="space-y-3 sm:space-y-4" variants={itemVariants}>
-              <h4 className="text-base sm:text-lg font-semibold text-white">Follow Me</h4>
-              <div className="flex space-x-3 sm:space-x-4">
+            <motion.div className="space-y-4" variants={itemVariants}>
+              <h4 className="text-lg font-semibold text-white">Follow Me</h4>
+              <div className="flex space-x-4">
                 <motion.a
                   href={Bio.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
+                  className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <FaGithub className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <FaGithub className="w-6 h-6" />
                 </motion.a>
                 <motion.a
                   href={Bio.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
+                  className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <FaLinkedin className="w-6 h-6" />
                 </motion.a>
               </div>
             </motion.div>
@@ -222,7 +231,7 @@ const Contact = () => {
                     name="subject"
                     placeholder="Subject"
                     required
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none text-sm sm:text-base"
+                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none"
                   />
                 </motion.div>
 
@@ -234,14 +243,14 @@ const Contact = () => {
                     name="message"
                     placeholder="Your Message"
                     required
-                    rows={4}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none resize-none text-sm sm:text-base"
+                    rows={5}
+                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none resize-none"
                   />
                 </motion.div>
 
                 {error && (
                   <motion.div
-                    className="text-red-400 text-xs sm:text-sm text-center p-3 bg-red-500/10 rounded-lg"
+                    className="text-red-400 text-sm text-center p-3 bg-red-500/10 rounded-lg"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -251,7 +260,7 @@ const Contact = () => {
 
                 {success && (
                   <motion.div
-                    className="text-green-400 text-xs sm:text-sm text-center p-3 bg-green-500/10 rounded-lg"
+                    className="text-green-400 text-sm text-center p-3 bg-green-500/10 rounded-lg"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -262,7 +271,7 @@ const Contact = () => {
                 <motion.button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-primary flex items-center justify-center gap-2 py-3 sm:py-4 text-base sm:text-lg font-semibold"
+                  className="w-full btn-primary flex items-center justify-center gap-2 py-4 text-lg font-semibold"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   animate={loading ? { scale: [1, 1.02, 1] } : {}}
@@ -271,7 +280,7 @@ const Contact = () => {
                   {loading ? (
                     <>
                       <motion.div
-                        className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full"
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                       />
@@ -279,7 +288,7 @@ const Contact = () => {
                     </>
                   ) : (
                     <>
-                      <FaPaperPlane className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <FaPaperPlane className="w-5 h-5" />
                       Send Message
                     </>
                   )}

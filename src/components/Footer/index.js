@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaEnvelope, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { Bio } from '../../data/constants';
 
 const Footer = () => {
@@ -18,7 +18,7 @@ const Footer = () => {
   const socialLinks = [
     { href: Bio.github, icon: FaGithub, label: 'GitHub' },
     { href: Bio.linkedin, icon: FaLinkedin, label: 'LinkedIn' },
-    { href: 'mailto:ashishsurya2005@gmail.com', icon: FaEnvelope, label: 'Email' },
+    { href: 'mailto:aashish.suryawanshi@example.com', icon: FaEnvelope, label: 'Email' },
   ];
 
   return (
@@ -114,18 +114,7 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             <p className="flex items-center justify-center gap-2">
-              &copy; {currentYear} Aashish Suryawanshi. Made with{' '}
-              <motion.span
-                className="text-red-500"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <FaHeart className="w-4 h-4" />
-              </motion.span>{' '}
-              and lots of ☕
-            </p>
-            <p className="mt-2 text-xs text-gray-600">
-              Built with React, Tailwind CSS, and Framer Motion
+              &copy; {currentYear} Aashish Suryawanshi. All rights reserved.
             </p>
           </motion.div>
         </motion.div>

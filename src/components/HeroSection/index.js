@@ -48,7 +48,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         {/* Floating orbs - Hidden on mobile for performance */}
@@ -72,7 +72,7 @@ const HeroSection = () => {
 
       <motion.div
         ref={ref}
-        className="container-custom relative z-20 px-4 sm:px-6 lg:px-8"
+        className="container-custom relative z-20 py-8 sm:py-12"
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
@@ -80,12 +80,12 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <motion.div
-            className="space-y-6 lg:space-y-8 text-center lg:text-left"
+            className="space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left order-2 lg:order-1"
             variants={itemVariants}
           >
             {/* Greeting */}
             <motion.div
-              className="text-base sm:text-lg text-primary-400 font-medium"
+              className="text-sm sm:text-base lg:text-lg text-primary-400 font-medium"
               variants={itemVariants}
             >
               👋 Hello, I'm
@@ -93,7 +93,8 @@ const HeroSection = () => {
 
             {/* Name */}
             <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
+              style={{ fontSize: 'clamp(2rem, 4vw + 1rem, 4.5rem)' }}
               variants={itemVariants}
             >
               <span className="gradient-text">{Bio.name}</span>
@@ -101,7 +102,8 @@ const HeroSection = () => {
 
             {/* Typewriter Effect */}
             <motion.div
-              className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold text-gray-300"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-gray-300"
+              style={{ fontSize: 'clamp(1.125rem, 2.5vw + 0.5rem, 2.5rem)' }}
               variants={itemVariants}
             >
               I am a{' '}
@@ -120,7 +122,8 @@ const HeroSection = () => {
 
             {/* Description */}
             <motion.p
-              className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+              className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+              style={{ fontSize: 'clamp(0.875rem, 1.2vw + 0.5rem, 1.125rem)' }}
               variants={itemVariants}
             >
               {Bio.description}
@@ -128,14 +131,14 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mt-6 sm:mt-8"
               variants={itemVariants}
             >
               <motion.a
                 href={Bio.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center justify-center gap-2 group text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
+                className="btn-primary inline-flex items-center justify-center gap-2 group w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -145,7 +148,7 @@ const HeroSection = () => {
 
               <motion.a
                 href="#contact"
-                className="btn-secondary inline-flex items-center justify-center gap-2 group text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
+                className="btn-secondary inline-flex items-center justify-center gap-2 group w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -155,7 +158,7 @@ const HeroSection = () => {
 
             {/* Social Links */}
             <motion.div
-              className="flex gap-6 justify-center lg:justify-start"
+              className="flex gap-4 sm:gap-6 justify-center lg:justify-start"
               variants={itemVariants}
             >
               <motion.a
@@ -183,7 +186,7 @@ const HeroSection = () => {
 
           {/* Right Content - Image */}
           <motion.div
-            className="flex justify-center lg:justify-end order-first lg:order-last"
+            className="flex justify-center lg:justify-end order-1 lg:order-2"
             variants={imageVariants}
           >
             <motion.div
@@ -199,7 +202,11 @@ const HeroSection = () => {
                 <motion.img
                   src={HeroImg}
                   alt="Aashish Suryawanshi"
-                  className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-primary-500/30 shadow-2xl"
+                  className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-primary-500/30 shadow-2xl"
+                  style={{ 
+                    width: 'clamp(12rem, 15vw + 6rem, 24rem)',
+                    height: 'clamp(12rem, 15vw + 6rem, 24rem)'
+                  }}
                   whileHover={{ rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 />

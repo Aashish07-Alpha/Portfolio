@@ -116,7 +116,7 @@ const Skills = () => {
                       transition={{ duration: 0.5 }}
                     />
                     <span className="text-gray-300 text-sm font-medium group-hover:text-white transition-colors">
-                      {item.name}
+                    {item.name}
                     </span>
                   </motion.div>
                 ))}

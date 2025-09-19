@@ -18,6 +18,17 @@
   html {
     scroll-behavior: smooth;
   }
+  
+  /* Mobile-specific styles */
+  @media (max-width: 640px) {
+    .container-custom {
+      @apply px-4;
+    }
+    
+    .section-padding {
+      @apply py-12 px-4;
+    }
+  }
 }
 
 @layer components {

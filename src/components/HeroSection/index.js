@@ -51,16 +51,16 @@ const HeroSection = () => {
     <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
-        {/* Floating orbs */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-accent-500/20 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
-        <div className="absolute bottom-40 right-1/3 w-28 h-28 bg-accent-500/15 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
+        {/* Floating orbs - Hidden on mobile for performance */}
+        <div className="hidden sm:block absolute top-20 left-10 w-32 h-32 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
+        <div className="hidden sm:block absolute top-40 right-20 w-24 h-24 bg-accent-500/20 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="hidden sm:block absolute bottom-20 left-1/4 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="hidden sm:block absolute bottom-40 right-1/3 w-28 h-28 bg-accent-500/15 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
         
-        {/* Grid pattern */}
+        {/* Grid pattern - Simplified for mobile */}
         <div className="absolute inset-0 opacity-5">
-          <div className="grid grid-cols-12 grid-rows-12 h-full w-full">
-            {Array.from({ length: 144 }).map((_, i) => (
+          <div className="grid grid-cols-6 sm:grid-cols-12 grid-rows-6 sm:grid-rows-12 h-full w-full">
+            {Array.from({ length: 36 }).map((_, i) => (
               <div key={i} className="border border-primary-500/20"></div>
             ))}
           </div>
@@ -72,20 +72,20 @@ const HeroSection = () => {
 
       <motion.div
         ref={ref}
-        className="container-custom relative z-20"
+        className="container-custom relative z-20 px-4 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
       >
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <motion.div
-            className="space-y-8"
+            className="space-y-6 lg:space-y-8 text-center lg:text-left"
             variants={itemVariants}
           >
             {/* Greeting */}
             <motion.div
-              className="text-lg text-primary-400 font-medium"
+              className="text-base sm:text-lg text-primary-400 font-medium"
               variants={itemVariants}
             >
               👋 Hello, I'm
@@ -93,7 +93,7 @@ const HeroSection = () => {
 
             {/* Name */}
             <motion.h1
-              className="text-5xl lg:text-7xl font-bold text-white leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight"
               variants={itemVariants}
             >
               <span className="gradient-text">{Bio.name}</span>
@@ -101,7 +101,7 @@ const HeroSection = () => {
 
             {/* Typewriter Effect */}
             <motion.div
-              className="text-2xl lg:text-4xl font-semibold text-gray-300"
+              className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-semibold text-gray-300"
               variants={itemVariants}
             >
               I am a{' '}
@@ -120,7 +120,7 @@ const HeroSection = () => {
 
             {/* Description */}
             <motion.p
-              className="text-lg text-gray-400 leading-relaxed max-w-2xl"
+              className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto lg:mx-0"
               variants={itemVariants}
             >
               {Bio.description}
@@ -128,14 +128,14 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
               variants={itemVariants}
             >
               <motion.a
                 href={Bio.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2 group"
+                className="btn-primary inline-flex items-center justify-center gap-2 group text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -145,7 +145,7 @@ const HeroSection = () => {
 
               <motion.a
                 href="#contact"
-                className="btn-secondary inline-flex items-center gap-2 group"
+                className="btn-secondary inline-flex items-center justify-center gap-2 group text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -155,7 +155,7 @@ const HeroSection = () => {
 
             {/* Social Links */}
             <motion.div
-              className="flex gap-6"
+              className="flex gap-6 justify-center lg:justify-start"
               variants={itemVariants}
             >
               <motion.a
@@ -183,7 +183,7 @@ const HeroSection = () => {
 
           {/* Right Content - Image */}
           <motion.div
-            className="flex justify-center lg:justify-end"
+            className="flex justify-center lg:justify-end order-first lg:order-last"
             variants={imageVariants}
           >
             <motion.div
@@ -199,19 +199,19 @@ const HeroSection = () => {
                 <motion.img
                   src={HeroImg}
                   alt="Aashish Suryawanshi"
-                  className="w-80 h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-primary-500/30 shadow-2xl"
+                  className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-full border-4 border-primary-500/30 shadow-2xl"
                   whileHover={{ rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 />
                 
-                {/* Floating Elements */}
+                {/* Floating Elements - Hidden on mobile */}
                 <motion.div
-                  className="absolute -top-4 -right-4 w-8 h-8 bg-primary-500 rounded-full"
+                  className="hidden sm:block absolute -top-4 -right-4 w-8 h-8 bg-primary-500 rounded-full"
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <motion.div
-                  className="absolute -bottom-4 -left-4 w-6 h-6 bg-accent-500 rounded-full"
+                  className="hidden sm:block absolute -bottom-4 -left-4 w-6 h-6 bg-accent-500 rounded-full"
                   animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 1 }}
                 />
@@ -221,9 +221,9 @@ const HeroSection = () => {
         </div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Hidden on mobile */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >

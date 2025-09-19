@@ -61,18 +61,18 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div className="container-custom px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
           <motion.div
             className="flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AS</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xs sm:text-sm">AS</span>
             </div>
-            <span className="text-xl font-bold text-white">Portfolio</span>
+            <span className="text-lg sm:text-xl font-bold text-white">Portfolio</span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -113,7 +113,7 @@ const Navbar = () => {
               href={Bio.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary inline-flex items-center gap-2"
+              className="btn-secondary inline-flex items-center gap-2 text-sm px-4 py-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -128,7 +128,7 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.95 }}
           >
-            {isOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+            {isOpen ? <FaTimes className="w-5 h-5 sm:w-6 sm:h-6" /> : <FaBars className="w-5 h-5 sm:w-6 sm:h-6" />}
           </motion.button>
         </div>
 
@@ -168,7 +168,7 @@ const Navbar = () => {
                   href={Bio.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block mx-4 mt-4 btn-primary text-center"
+                  className="block mx-4 mt-4 btn-primary text-center text-sm px-4 py-3"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}

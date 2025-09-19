@@ -1,9 +1,7 @@
-import { ThemeProvider } from "styled-components";
-import { useState, useEffect } from "react";
-import { darkTheme, lightTheme } from './utils/Themes.js'
-import Navbar from "./components/Navbar";
-import './App.css';
+import React, { useState } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import About from "./components/About";
 import Skills from "./components/Skills";
@@ -14,46 +12,65 @@ import Experience from "./components/Experience";
 import Education from "./components/Education";
 import Achievements from "./components/Achievements";
 import ProjectDetails from "./components/ProjectDetails";
-import styled from "styled-components";
+import './App.css';
 
-const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg};
-  width: 100%;
-  overflow-x: hidden;
-`
-
-const Wrapper = styled.div`
-  background: linear-gradient(38.73deg, rgba(204, 0, 187, 0.15) 0%, rgba(201, 32, 184, 0) 50%), linear-gradient(141.27deg, rgba(0, 70, 209, 0) 50%, rgba(0, 70, 209, 0.15) 100%);
-  width: 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%,30% 98%, 0 100%);
-`
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
   const [openModal, setOpenModal] = useState({ state: false, project: null });
-  console.log(openModal)
+
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Router >
+    <Router>
+      <div className="min-h-screen bg-dark-900 text-white scrollbar-custom">
         <Navbar />
-        <Body>
+        
+        <main className="relative">
+          {/* Hero Section */}
           <HeroSection />
-          <Wrapper>
+          
+          {/* About Section */}
+          <About />
+          
+          {/* Skills Section */}
+          <section id="skills" className="section-padding bg-gradient-to-b from-dark-900 to-dark-800">
             <Skills />
+          </section>
+          
+          {/* Experience Section */}
+          <section id="experience" className="section-padding bg-dark-800">
             <Experience />
-          </Wrapper>
-          <Projects openModal={openModal} setOpenModal={setOpenModal} />
-          <Wrapper>
+          </section>
+          
+          {/* Projects Section */}
+          <section id="projects" className="section-padding bg-gradient-to-b from-dark-800 to-dark-900">
+            <Projects openModal={openModal} setOpenModal={setOpenModal} />
+          </section>
+          
+          {/* Education Section */}
+          <section id="education" className="section-padding bg-dark-900">
             <Education />
+          </section>
+          
+          {/* Achievements Section */}
+          <section id="achievements" className="section-padding bg-gradient-to-b from-dark-900 to-dark-800">
             <Achievements />
+          </section>
+          
+          {/* Contact Section */}
+          <section id="contact" className="section-padding bg-dark-800">
             <Contact />
-          </Wrapper>
-          <Footer />
-          {openModal.state &&
+          </section>
+        </main>
+        
+        {/* Footer */}
+        <Footer />
+        
+        {/* Project Modal */}
+        <AnimatePresence>
+          {openModal.state && (
             <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
-          }
-        </Body>
-      </Router>
-    </ThemeProvider>
+          )}
+        </AnimatePresence>
+      </div>
+    </Router>
   );
 }
 

@@ -1,161 +1,49 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaPaperPlane } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
-import { Snackbar } from '@mui/material';
-
-const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-position: relative;
-z-index: 1;
-align-items: center;
-@media (max-width: 960px) {
-    padding: 0px;
-}
-`
-
-const Wrapper = styled.div`
-position: relative;
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-direction: column;
-width: 100%;
-max-width: 1350px;
-padding: 0px 0px 80px 0px;
-gap: 12px;
-@media (max-width: 960px) {
-    flex-direction: column;
-}
-`
-
-const Title = styled.div`
-font-size: 42px;
-text-align: center;
-font-weight: 600;
-margin-top: 20px;
-  color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 768px) {
-      margin-top: 12px;
-      font-size: 32px;
-  }
-`;
-
-const Desc = styled.div`
-    font-size: 18px;
-    text-align: center;
-    max-width: 600px;
-    color: ${({ theme }) => theme.text_secondary};
-    @media (max-width: 768px) {
-        margin-top: 12px;
-        font-size: 16px;
-    }
-`;
-
-
-const ContactForm = styled.form`
-  width: 95%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.card};
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
-  margin-top: 28px;
-  gap: 12px;
-`
-
-const ContactTitle = styled.div`
-  font-size: 24px;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_primary};
-`
-
-const ContactInput = styled.input`
-  flex: 1;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary};
-  outline: none;
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary};
-  border-radius: 12px;
-  padding: 12px 16px;
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.primary};
-  }
-`
-
-const ContactInputMessage = styled.textarea`
-  flex: 1;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary};
-  outline: none;
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary};
-  border-radius: 12px;
-  padding: 12px 16px;
-  resize: vertical;
-  min-height: 120px;
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.primary};
-  }
-`
-
-const ErrorMessage = styled.div`
-  color: #ff6b6b;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 8px;
-`
-
-const ContactButton = styled.button`
-  width: 100%;
-  text-decoration: none;
-  text-align: center;
-  background: hsla(271, 100%, 50%, 1);
-  background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-  background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-  background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-  padding: 13px 16px;
-  margin-top: 2px;
-  border-radius: 12px;
-  border: none;
-  color: ${({ theme }) => theme.text_primary};
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(271, 100%, 50%, 0.3);
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-`
-
-
+import { Bio } from '../../data/constants';
 
 const Contact = () => {
-
-  //hooks
-  const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const form = useRef();
+  
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setSuccess(false);
     
     // Basic validation
     const formData = new FormData(form.current);
@@ -178,44 +66,231 @@ const Contact = () => {
 
     emailjs.sendForm('service_tox7kqs', 'template_nv7k7mj', form.current, 'SybVGsYS52j2TfLbi')
       .then((result) => {
-        setOpen(true);
+        setSuccess(true);
         form.current.reset();
         setLoading(false);
+        setTimeout(() => setSuccess(false), 5000);
       }, (error) => {
         console.log(error.text);
         setError('Failed to send email. Please try again.');
         setLoading(false);
       });
-  }
+  };
 
-
+  const contactInfo = [
+    {
+      icon: FaEnvelope,
+      label: 'Email',
+      value: 'aashish.suryawanshi@example.com',
+      href: 'mailto:aashish.suryawanshi@example.com'
+    },
+    {
+      icon: FaPhone,
+      label: 'Phone',
+      value: '+91 9876543210',
+      href: 'tel:+919876543210'
+    },
+    {
+      icon: FaMapMarkerAlt,
+      label: 'Location',
+      value: 'Pune, Maharashtra, India',
+      href: '#'
+    }
+  ];
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>Contact</Title>
-        <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
-        <ContactForm ref={form} onSubmit={handleSubmit}>
-          <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" type="email" required />
-          <ContactInput placeholder="Your Name" name="from_name" required />
-          <ContactInput placeholder="Subject" name="subject" required />
-          <ContactInputMessage placeholder="Message" name="message" required />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <ContactButton type="submit" disabled={loading}>
-            {loading ? 'Sending...' : 'Send Message'}
-          </ContactButton>
-        </ContactForm>
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={()=>setOpen(false)}
-          message="Email sent successfully!"
-          severity="success"
-        />
-      </Wrapper>
-    </Container>
-  )
-}
+    <section id="contact" className="section-padding bg-dark-800">
+      <motion.div
+        ref={ref}
+        className="container-custom"
+        variants={containerVariants}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+      >
+        {/* Section Header */}
+        <motion.div className="text-center mb-16" variants={itemVariants}>
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+            Get In <span className="gradient-text">Touch</span>
+          </h2>
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+            Feel free to reach out to me for any questions, opportunities, or just to say hello!
+          </p>
+        </motion.div>
 
-export default Contact
+        <div className="grid lg:grid-cols-2 gap-16">
+          {/* Contact Information */}
+          <motion.div className="space-y-8" variants={itemVariants}>
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-6">Let's Connect</h3>
+              <p className="text-gray-400 mb-8">
+                I'm always interested in new opportunities and collaborations. 
+                Whether you have a project in mind or just want to chat about technology, 
+                I'd love to hear from you!
+              </p>
+            </div>
+
+            {/* Contact Info Cards */}
+            <div className="space-y-4">
+              {contactInfo.map((info, index) => (
+                <motion.a
+                  key={index}
+                  href={info.href}
+                  className="card p-6 flex items-center space-x-4 hover:border-primary-500/50 transition-all duration-300 group"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, x: 10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-12 h-12 bg-primary-500/20 rounded-lg flex items-center justify-center group-hover:bg-primary-500/30 transition-colors">
+                    <info.icon className="w-6 h-6 text-primary-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-400">{info.label}</div>
+                    <div className="text-white font-medium">{info.value}</div>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Social Links */}
+            <motion.div className="space-y-4" variants={itemVariants}>
+              <h4 className="text-lg font-semibold text-white">Follow Me</h4>
+              <div className="flex space-x-4">
+                <motion.a
+                  href={Bio.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaGithub className="w-6 h-6" />
+                </motion.a>
+                <motion.a
+                  href={Bio.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-dark-700 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary-500/20 transition-all duration-300"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaLinkedin className="w-6 h-6" />
+                </motion.a>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div variants={itemVariants}>
+            <div className="card p-8">
+              <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
+              
+              <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <motion.div
+                    className="relative"
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <input
+                      type="text"
+                      name="from_name"
+                      placeholder="Your Name"
+                      required
+                      className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none"
+                    />
+                  </motion.div>
+                  
+                  <motion.div
+                    className="relative"
+                    whileFocus={{ scale: 1.02 }}
+                  >
+                    <input
+                      type="email"
+                      name="from_email"
+                      placeholder="Your Email"
+                      required
+                      className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none"
+                    />
+                  </motion.div>
+                </div>
+
+                <motion.div
+                  className="relative"
+                  whileFocus={{ scale: 1.02 }}
+                >
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Subject"
+                    required
+                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none"
+                  />
+                </motion.div>
+
+                <motion.div
+                  className="relative"
+                  whileFocus={{ scale: 1.02 }}
+                >
+                  <textarea
+                    name="message"
+                    placeholder="Your Message"
+                    required
+                    rows={5}
+                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300 focus:outline-none resize-none"
+                  />
+                </motion.div>
+
+                {error && (
+                  <motion.div
+                    className="text-red-400 text-sm text-center p-3 bg-red-500/10 rounded-lg"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {error}
+                  </motion.div>
+                )}
+
+                {success && (
+                  <motion.div
+                    className="text-green-400 text-sm text-center p-3 bg-green-500/10 rounded-lg"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    Message sent successfully! I'll get back to you soon.
+                  </motion.div>
+                )}
+
+                <motion.button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full btn-primary flex items-center justify-center gap-2 py-4 text-lg font-semibold"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  animate={loading ? { scale: [1, 1.02, 1] } : {}}
+                  transition={{ duration: 0.5, repeat: loading ? Infinity : 0 }}
+                >
+                  {loading ? (
+                    <>
+                      <motion.div
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <FaPaperPlane className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Contact;

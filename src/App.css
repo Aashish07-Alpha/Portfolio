@@ -15,12 +15,20 @@
     padding: 0;
     overflow-x: hidden;
     width: 100%;
+    background-color: #0f172a !important; /* Force dark-900 background */
   }
   
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
     width: 100%;
+    background-color: #0f172a; /* Ensure consistent background */
+  }
+  
+  /* Ensure consistent background across all screen sizes */
+  #root {
+    background-color: #0f172a;
+    min-height: 100vh;
   }
   
   /* Responsive typography scale */
@@ -356,4 +364,4 @@
     color: black !important;
     border: 1px solid #000;
   }
-}
+  }

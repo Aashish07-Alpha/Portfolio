@@ -30,7 +30,7 @@ function App() {
           <About />
           
           {/* Skills Section */}
-          <section id="skills" className="section-padding bg-gradient-to-b from-dark-900 to-dark-800">
+          <section id="skills" className="section-padding bg-dark-900">
             <Skills />
           </section>
           
@@ -40,17 +40,17 @@ function App() {
           </section>
           
           {/* Projects Section */}
-          <section id="projects" className="section-padding bg-gradient-to-b from-dark-800 to-dark-900">
+          <section id="projects" className="section-padding bg-dark-900">
             <Projects openModal={openModal} setOpenModal={setOpenModal} />
           </section>
           
           {/* Education Section */}
-          <section id="education" className="section-padding bg-dark-900">
+          <section id="education" className="section-padding bg-dark-800">
             <Education />
           </section>
           
           {/* Achievements Section */}
-          <section id="achievements" className="section-padding bg-gradient-to-b from-dark-900 to-dark-800">
+          <section id="achievements" className="section-padding bg-dark-900">
             <Achievements />
           </section>
           

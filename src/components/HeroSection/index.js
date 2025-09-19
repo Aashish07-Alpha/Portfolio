@@ -49,26 +49,26 @@ const HeroSection = () => {
 
   return (
     <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20">
-      {/* Animated Background */}
-      <div className="absolute inset-0 z-0">
-        {/* Floating orbs - Hidden on mobile for performance */}
-        <div className="hidden sm:block absolute top-20 left-10 w-32 h-32 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
-        <div className="hidden sm:block absolute top-40 right-20 w-24 h-24 bg-accent-500/20 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
-        <div className="hidden sm:block absolute bottom-20 left-1/4 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
-        <div className="hidden sm:block absolute bottom-40 right-1/3 w-28 h-28 bg-accent-500/15 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
+      {/* Unified Background System - Consistent across all screen sizes */}
+      <div className="absolute inset-0 z-0 bg-dark-900">
+        {/* Base gradient - Always visible */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/8 via-transparent to-accent-500/8"></div>
         
-        {/* Grid pattern - Simplified for mobile */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="grid grid-cols-6 sm:grid-cols-12 grid-rows-6 sm:grid-rows-12 h-full w-full">
+        {/* Floating orbs - Progressive enhancement */}
+        <div className="hidden md:block absolute top-20 left-10 w-32 h-32 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
+        <div className="hidden md:block absolute top-40 right-20 w-24 h-24 bg-accent-500/20 rounded-full blur-xl animate-float" style={{animationDelay: '2s'}}></div>
+        <div className="hidden lg:block absolute bottom-20 left-1/4 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl animate-float" style={{animationDelay: '4s'}}></div>
+        <div className="hidden lg:block absolute bottom-40 right-1/3 w-28 h-28 bg-accent-500/15 rounded-full blur-xl animate-float" style={{animationDelay: '1s'}}></div>
+        
+        {/* Grid pattern - Progressive enhancement */}
+        <div className="absolute inset-0 opacity-3 sm:opacity-4 md:opacity-5">
+          <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 grid-rows-6 sm:grid-rows-8 md:grid-rows-10 lg:grid-rows-12 h-full w-full">
             {Array.from({ length: 36 }).map((_, i) => (
-              <div key={i} className="border border-primary-500/20"></div>
+              <div key={i} className="border border-primary-500/10 sm:border-primary-500/15 md:border-primary-500/20"></div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-accent-500/10 z-10"></div>
 
       <motion.div
         ref={ref}

@@ -223,7 +223,7 @@ export const experiences = [
     img: "https://treabrolabs.com/images/Treabrolabs%20Official%20Logo.png",
     role: "Full Stack Development Intern",
     company: "TreaBrolabs",
-    date: "Oct 2024 - Present",
+    date: "Oct 2025 - Present",
     desc: "Developing dynamic web applications using MERN stack with RESTful API integration, secure JWT authentication, and optimized database structures. Implementing reusable React components and deploying scalable applications on Render and Vercel using version control and agile practices.",
     skills: [
       "MERN Stack",

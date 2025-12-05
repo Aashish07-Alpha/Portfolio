@@ -217,16 +217,35 @@ export const skills = [
   },
 ];
 
-// Add this to your existing constants.js file
-
 export const experiences = [
   {
     id: 0,
+    img: "https://treabrolabs.com/images/Treabrolabs%20Official%20Logo.png",
+    role: "Full Stack Development Intern",
+    company: "TreaBrolabs",
+    date: "Oct 2024 - Present",
+    desc: "Developing dynamic web applications using MERN stack with RESTful API integration, secure JWT authentication, and optimized database structures. Implementing reusable React components and deploying scalable applications on Render and Vercel using version control and agile practices.",
+    skills: [
+      "MERN Stack",
+      "RESTful APIs",
+      "JWT Authentication",
+      "React.js",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Git",
+      "Render",
+      "Vercel",
+      "Agile Methodology",
+    ],
+  },
+  {
+    id: 1,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmy3M3B8Ufbm6CvY52oH4OoECvrBoeUCDuQ&s",
     role: "General Secretary - Entrepreneurship Development Cell",
-    organization: "Vishwakarma Institute Of Information Technology (VIIT)",
-    duration: "Aug 2023 - Present",
-    description:
-      "Leading the EDC Cell to foster entrepreneurial spirit among students by organizing workshops, speaker sessions. Collaborating with peers and faculty to build an innovation-driven ecosystem.",
+    company: "Vishwakarma Institute Of Information Technology (VIIT)",
+    date: "Aug 2023 - Present",
+    desc: "Leading the EDC Cell to foster entrepreneurial spirit among students by organizing workshops, speaker sessions. Collaborating with peers and faculty to build an innovation-driven ecosystem.",
     skills: [
       "Leadership",
       "Event Management",
@@ -236,12 +255,12 @@ export const experiences = [
     ],
   },
   {
-    id: 1,
+    id: 2,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREmy3M3B8Ufbm6CvY52oH4OoECvrBoeUCDuQ&s",
     role: "Sponsorship Lead - Gandharva",
-    organization: "VIIT Cultural Fest",
-    duration: "Jan 2024 - Mar 2024",
-    description:
-      "Headed the sponsorship team for Gandharva, VIIT's cultural fest. Successfully acquired and managed multiple sponsors, negotiated deals, and ensured smooth coordination between brands and the organizing committee.",
+    company: "VIIT Cultural Fest",
+    date: "Jan 2024 - Mar 2024",
+    desc: "Headed the sponsorship team for Gandharva, VIIT's cultural fest. Successfully acquired and managed multiple sponsors, negotiated deals, and ensured smooth coordination between brands and the organizing committee.",
     skills: [
       "Sponsorship Acquisition",
       "Negotiation",
